@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="245.0" style="-fx-background-color: #ADD8E6;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button layoutX="48.0" layoutY="132.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="149.0" style="-fx-background-color: #A9A9A9;" text="Plasare comanda">
+         <font>
+            <Font name="Lucida Console" size="12.0" />
+         </font></Button>
+      <Button layoutX="48.0" layoutY="209.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="149.0" style="-fx-background-color: #A9A9A9;" text="Administrare stoc" textAlignment="CENTER">
+         <font>
+            <Font name="Lucida Console" size="12.0" />
+         </font></Button>
+      <Label layoutX="48.0" layoutY="30.0" text="Agent de vanzari">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+   </children>
+</AnchorPane>
