@@ -36,7 +36,7 @@ public class HelloController {
             if(userU.isEmpty() || passU.isEmpty()){
                 throw new NumberFormatException("All fields must be filled.");
             }
-            if(!passU.endsWith("AV")){
+            if(!passU.endsWith("123")){
                 throw new NumberFormatException("Wrong password");
             }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("administrare.fxml"));
@@ -47,7 +47,7 @@ public class HelloController {
             stage.setScene(scene);
             stage.show();
         }catch (Exception e){
-            Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.WARNING, e.getMessage());
             alert.show();
         }
     }
