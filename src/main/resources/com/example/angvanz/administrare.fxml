@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="245.0" style="-fx-background-color: #ADD8E6;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:controller="com.example.angvanz.HelloController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="245.0" style="-fx-background-color: #ADD8E6;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button layoutX="48.0" layoutY="132.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="149.0" style="-fx-background-color: #A9A9A9;" text="Plasare comanda">
+      <Button fx:id="comanda" layoutX="48.0" layoutY="132.0" mnemonicParsing="false" onAction="#openCreeareComanda" prefHeight="22.0" prefWidth="149.0" style="-fx-background-color: #A9A9A9;" text="Plasare comanda">
          <font>
             <Font name="Lucida Console" size="12.0" />
          </font></Button>
@@ -14,6 +14,11 @@
          <font>
             <Font name="Lucida Console" size="12.0" />
          </font></Button>
+      <Button fx:id="back"  layoutX="48.0" layoutY="286.0" mnemonicParsing="false" onAction="#back1" prefHeight="22.0" prefWidth="149.0" style="-fx-background-color: #A9A9A9;" text="Back" textAlignment="CENTER">
+         <font>
+            <Font name="Lucida Console" size="12.0"/>
+         </font>
+      </Button>
       <Label layoutX="48.0" layoutY="30.0" text="Agent de vanzari">
          <font>
             <Font size="20.0" />
