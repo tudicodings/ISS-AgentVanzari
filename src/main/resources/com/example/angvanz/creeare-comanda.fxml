@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.text.Font?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.angvanz.HelloController"
-            prefHeight="360.0" prefWidth="345.0"
-            style="-fx-background-color: #ADD8E6;">
+<AnchorPane prefHeight="360.0" prefWidth="565.0" style="-fx-background-color: #ADD8E6;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.angvanz.HelloController">
     <children>
         <Label layoutX="20.0" layoutY="40.0" prefHeight="21.0" prefWidth="106.0" text="ID comanda:" textFill="WHITE">
             <font>
@@ -21,51 +14,49 @@
         <TextField fx:id="idCom" layoutX="20.0" layoutY="59.0" prefHeight="25.0" prefWidth="149.0" promptText="ID Comanda" />
         <Label layoutX="20.0" layoutY="85.0" prefHeight="21.0" prefWidth="106.0" text="Nume firma:" textFill="WHITE">
             <font>
-                <Font name="Lucida Console" size="15.0"/>
+                <Font name="Lucida Console" size="15.0" />
             </font>
         </Label>
         <TextField fx:id="numeF" layoutX="20.0" layoutY="104.0" prefHeight="25.0" prefWidth="149.0" promptText="Nume firma" />
         <Label layoutX="20.0" layoutY="130.0" prefHeight="21.0" prefWidth="106.0" text="Denumire:" textFill="WHITE">
             <font>
-                <Font name="Lucida Console" size="15.0"/>
+                <Font name="Lucida Console" size="15.0" />
             </font>
         </Label>
         <TextField fx:id="denum" layoutX="20.0" layoutY="149.0" prefHeight="25.0" prefWidth="149.0" promptText="Denumire" />
         <Label layoutX="20.0" layoutY="175.0" prefHeight="21.0" prefWidth="106.0" text="Cantitate:" textFill="WHITE">
             <font>
-                <Font name="Lucida Console" size="15.0"/>
+                <Font name="Lucida Console" size="15.0" />
             </font>
         </Label>
-        <TextField fx:id="cant" layoutX="20.0" layoutY="194.0" prefHeight="22.0" prefWidth="149.0" promptText="Cantitate" />
+        <TextField fx:id="cant" layoutX="20.0" layoutY="194.0" prefHeight="25.0" prefWidth="149.0" promptText="Cantitate" />
         <Button fx:id="back" layoutX="20.0" layoutY="300.0" mnemonicParsing="false" onAction="#back2" prefHeight="22.0" prefWidth="60.0" style="-fx-background-color: #A9A9A9;" text="Back" textAlignment="CENTER">
             <font>
-                <Font name="Lucida Console" size="12.0"/>
+                <Font name="Lucida Console" size="12.0" />
             </font>
         </Button>
         <Button fx:id="add" layoutX="20.0" layoutY="230.0" mnemonicParsing="false" onAction="#addComanda" prefHeight="22.0" prefWidth="120.0" style="-fx-background-color: #A9A9A9;" text="Adaugare" textAlignment="CENTER">
             <font>
-                <Font name="Lucida Console" size="12.0"/>
+                <Font name="Lucida Console" size="12.0" />
             </font>
         </Button>
-        <Label layoutX="200.0" layoutY="39.0" prefHeight="21.0" prefWidth="140.0" text="Produse adaugate:" textFill="WHITE">
+        <Label layoutX="200.0" layoutY="39.0" prefHeight="21.0" prefWidth="165.0" text="Comenzi plasate:" textFill="WHITE">
             <font>
-                <Font name="Lucida Console" size="15.0"/>
+                <Font name="Lucida Console" size="15.0" />
             </font>
         </Label>
-        <ListView layoutX="200.0" layoutY="59.0" prefHeight="180.0" prefWidth="140.0">
-
-        </ListView>
-        <Label layoutX="240.0" layoutY="249.0" prefHeight="21.0" prefWidth="106.0" text="Pret:" textFill="WHITE">
+        <Button fx:id="finalizare" layoutX="305.0" layoutY="311.0" mnemonicParsing="false" onAction="#addComandaFinal" prefHeight="22.0" prefWidth="100.0" style="-fx-background-color: #A9A9A9;" text="Finalizare" textAlignment="CENTER">
             <font>
-                <Font name="Lucida Console" size="15.0"/>
-            </font>
-        </Label>
-        <TextField fx:id="pr" layoutX="240.0" layoutY="270.0" prefHeight="21.0" prefWidth="65.0" editable="false"/>
-        <Button fx:id="finalizare" layoutX="220.0" layoutY="300.0" mnemonicParsing="false" onAction="#addComandaFinal" prefHeight="22.0" prefWidth="100.0" style="-fx-background-color: #A9A9A9;" text="Finalizare" textAlignment="CENTER">
-            <font>
-                <Font name="Lucida Console" size="12.0"/>
+                <Font name="Lucida Console" size="12.0" />
             </font>
         </Button>
+      <TableView layoutX="193.0" layoutY="62.0" prefHeight="190.0" prefWidth="338.0">
+        <columns>
+          <TableColumn prefWidth="35.0" text="ID" />
+          <TableColumn prefWidth="123.0" text="Nume" />
+            <TableColumn prefWidth="118.0" text="Denumire produs" />
+            <TableColumn prefWidth="61.0" text="Cantitate" />
+        </columns>
+      </TableView>
     </children>
 </AnchorPane>
-

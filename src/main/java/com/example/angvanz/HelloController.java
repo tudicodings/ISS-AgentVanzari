@@ -10,8 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class HelloController {
     @FXML
     private Label welcomeText;
@@ -41,6 +39,8 @@ public class HelloController {
     @FXML
     Button comanda;
     @FXML
+    Button stock;
+    @FXML
     Button back;
     @FXML
     Button add;
@@ -53,7 +53,7 @@ public class HelloController {
             if(userU.isEmpty() || passU.isEmpty()){
                 throw new NumberFormatException("All fields must be filled.");
             }
-            if(passU.endsWith("1")){
+            /*if(passU.endsWith("1")){
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Sunteti logat ca admin");
                 alert.show();
                 admin = true;
@@ -67,7 +67,7 @@ public class HelloController {
             //((!passU.endsWith("1") && passU.endsWith("2")) ||( !passU.endsWith("2") && passU.endsWith("1")))
             if(!passU.endsWith("1") && !passU.endsWith("2")){
                 throw new NumberFormatException("Wrong password");
-            }
+            }*/
             FXMLLoader loader = new FXMLLoader(getClass().getResource("administrare.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
@@ -80,12 +80,30 @@ public class HelloController {
             alert.show();
         }
     }
+    @FXML
+    private void openAdministrareStoc(){
+        try{
+            if(admin){
+                throw new NumberFormatException("Not an employee!");
+            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("administrare-stock.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) stock.getScene().getWindow();
+            stage.setTitle("Administrare stock.");
+            stage.setScene(scene);
+            stage.show();
+        }catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.WARNING, e.getMessage());
+            alert.show();
+        }
+    }
 
     @FXML
     private void openCreeareComanda(){
         try{
-            if(!admin){
-                throw new NumberFormatException("Not an admin!");
+            if(admin){
+                throw new NumberFormatException("Not an employee!");
             }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("creeare-comanda.fxml"));
             Parent root = loader.load();

@@ -10,7 +10,7 @@
          <font>
             <Font name="Lucida Console" size="12.0" />
          </font></Button>
-      <Button layoutX="48.0" layoutY="209.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="149.0" style="-fx-background-color: #A9A9A9;" text="Administrare stoc" textAlignment="CENTER">
+      <Button fx:id="stock" layoutX="48.0" layoutY="209.0" mnemonicParsing="false" onAction="#openAdministrareStoc" prefHeight="22.0" prefWidth="149.0" style="-fx-background-color: #A9A9A9;" text="Administrare stoc" textAlignment="CENTER">
          <font>
             <Font name="Lucida Console" size="12.0" />
          </font></Button>
