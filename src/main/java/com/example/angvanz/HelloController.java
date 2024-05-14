@@ -1,16 +1,29 @@
 package com.example.angvanz;
 
+import domain.Product;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import repository.RepoAgentDB;
+import repository.RepoOrderDB;
+import repository.RepoProdDB;
+import service.Service;
 
-public class HelloController {
+import java.net.URL;
+import java.sql.*;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class HelloController implements Initializable {
     @FXML
     private Label welcomeText;
 
@@ -23,9 +36,23 @@ public class HelloController {
     @FXML
     private TextField passTF;
 
-    // PENTRU CREEARE COMANDA
+    // PENTRU ADAUGARE PRODUS
     @FXML
-    private TextField idCom;
+    private TableView<Product> tabelprod;
+    @FXML
+    private TextField namefield;
+    @FXML
+    private TextField quantityfield;
+    @FXML
+    private TextField pricefield;
+    @FXML
+    private TextField delid;
+    private RepoProdDB productRepo;
+    private RepoOrderDB orderRepo;
+    private RepoAgentDB agentRepo;
+    private Service service;
+
+    // PENTRU CREEARE COMANDA
     @FXML
     private TextField numeF;
     @FXML
@@ -45,6 +72,19 @@ public class HelloController {
     @FXML
     Button add;
 
+    private boolean login(String username, String password){
+        String query = "SELECT * FROM Agents WHERE username = ? AND password = ?;";
+        try(Connection conn = DriverManager.getConnection("jdbc:sqlite:agents.sqlite");
+            PreparedStatement pstmt = conn.prepareStatement(query)){
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next();
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
     @FXML
     private void openAdministrare(){
         try{
@@ -53,21 +93,9 @@ public class HelloController {
             if(userU.isEmpty() || passU.isEmpty()){
                 throw new NumberFormatException("All fields must be filled.");
             }
-            /*if(passU.endsWith("1")){
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Sunteti logat ca admin");
-                alert.show();
-                admin = true;
-                agent = false;
-            }else if(passU.endsWith("2")){
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Sunteti logat ca agent");
-                alert.show();
-                agent = true;
-                admin = false;
+            if(userU.endsWith(".agent") && login(userU, passU)){
+                throw  new NumberFormatException("Username-ul sau parola nu este valid!");
             }
-            //((!passU.endsWith("1") && passU.endsWith("2")) ||( !passU.endsWith("2") && passU.endsWith("1")))
-            if(!passU.endsWith("1") && !passU.endsWith("2")){
-                throw new NumberFormatException("Wrong password");
-            }*/
             FXMLLoader loader = new FXMLLoader(getClass().getResource("administrare.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
@@ -83,9 +111,6 @@ public class HelloController {
     @FXML
     private void openAdministrareStoc(){
         try{
-            if(admin){
-                throw new NumberFormatException("Not an employee!");
-            }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("administrare-stock.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
@@ -102,9 +127,6 @@ public class HelloController {
     @FXML
     private void openCreeareComanda(){
         try{
-            if(admin){
-                throw new NumberFormatException("Not an employee!");
-            }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("creeare-comanda.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
@@ -151,14 +173,12 @@ public class HelloController {
     }
     @FXML
     private void addComanda(){
-        try {
-            var idc = idCom.getText();
-            //var idcomanda = Integer.parseInt(idCom.getText());
+        try {;
             var numeFirma = numeF.getText();
             var denumireP =  denum.getText();
             //var cantitateC = Integer.parseInt(cant.getText());
             var cantc = cant.getText();
-            if ( idc.isEmpty() || numeFirma.isEmpty() || denumireP.isEmpty() || cantc.isEmpty()) {
+            if (numeFirma.isEmpty() || denumireP.isEmpty() || cantc.isEmpty()) {
                 throw new NumberFormatException("You can't leave empty fields!");
             }
         }catch (Exception e){
@@ -174,6 +194,84 @@ public class HelloController {
             Alert alert = new Alert(Alert.AlertType.WARNING, e.getMessage());
             alert.show();
 
+        }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle){
+        productRepo = new RepoProdDB();
+        orderRepo = new RepoOrderDB();
+        agentRepo = new RepoAgentDB();
+        service = new Service(productRepo, orderRepo, agentRepo);
+        showAllrecords();
+    }
+    @FXML
+    protected void showAllrecords(){
+        List<Product> products = service.getAllProducts();
+
+        TableColumn<Product, String> columnid = new TableColumn<>("ID");
+        columnid.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        TableColumn<Product, String> columnName = new TableColumn<>("Name");
+        columnid.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Product, String> columnQuantity = new TableColumn<>("Quantity");
+        columnQuantity.setCellValueFactory(cellData-> {
+            int quantity = cellData.getValue().getQuantity();
+            return new SimpleStringProperty(quantity == 0 ? "n/a" : String.valueOf(quantity));
+        });
+
+        TableColumn<Product, String> columnPrice = new TableColumn<>("Price");
+        columnid.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        tabelprod.getColumns().clear();
+        tabelprod.getColumns().addAll(columnid, columnName, columnQuantity, columnPrice);
+
+        ObservableList<Product> data = FXCollections.observableArrayList(products);
+        tabelprod.setItems(data);
+    }
+    public void addProdus(ActionEvent actionEvent){
+        try{
+            var nameText = namefield.getText();
+            var quantityText = quantityfield.getText();
+            var priceText = pricefield.getText();
+
+            if (nameText.isEmpty() || priceText.isEmpty() || quantityText.isEmpty()) {
+                throw new NumberFormatException("All fields must be filled");
+            }
+            double price = Double.parseDouble(priceText);
+            int quantity = Integer.parseInt(quantityText);
+
+            if(price < 0 || quantity < 0){
+                throw new NumberFormatException("Price and Quantity must be greater than 0!");
+            }
+            service.add(nameText,quantity,price);
+            showAllrecords();
+            namefield.clear();
+            quantityfield.clear();
+            pricefield.clear();
+
+        } catch (IllegalAccessException e) {
+            Alert hello = new Alert(Alert.AlertType.WARNING, e.getMessage());
+            hello.show();
+        }
+    }
+    public void deleteProdus(ActionEvent actionEvent){
+        try{
+            var iddel = delid.getText();
+            if(iddel.isEmpty()){
+                throw new NumberFormatException("All fields must be filled!");
+            }
+            int id = Integer.parseInt(iddel);
+            if(id<0){
+                throw new NumberFormatException("Id must be greater than 0");
+            }
+            service.delete(id);
+            showAllrecords();
+            delid.clear();
+        } catch (IllegalAccessException e) {
+            Alert hello = new Alert(Alert.AlertType.WARNING, e.getMessage());
+            hello.show();
         }
     }
 }

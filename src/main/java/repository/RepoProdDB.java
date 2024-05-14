@@ -1,91 +1,110 @@
 package repository;
 
 
-import domain.Agent;
+import domain.Entity;
 import domain.Product;
 import org.sqlite.SQLiteDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
-public class RepoProdDB extends RepoProd implements RepoINT<Product>{
-    private String JDBC_URL;
+public class RepoProdDB implements RepoINT{
+    private final String url = "jdbc:sqlite:products.sqlite";
+    private Connection connection;
+    public RepoProdDB(){createTablesIfNotExists();}
+    public void createTablesIfNotExists(){
+        String createTableQuery = "CREATE TABLE IF NOT EXISTS Products (" +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Name TEXT," +
+                "Quantity INTEGER," +
+                "Price DOUBLE" +
+                ");";
 
-    private Connection connection = null;
-
-    public RepoProdDB(String JDBC_URL){
-        this.JDBC_URL = "jdbc:sqlite:" + JDBC_URL;
-        openConnection();
-        createtable();
-    }
-    public void openConnection(){
         SQLiteDataSource ds = new SQLiteDataSource();
-        ds.setUrl(JDBC_URL);
-
+        ds.setUrl(url);
         try{
-            if(connection == null){
-                connection = (Connection) ds.getConnection();
+            if(connection == null || connection.isClosed()){
+                connection = ds.getConnection();
+                Statement stmt = connection.createStatement();
+                stmt.execute(createTableQuery);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
-
-    public void closeConnetion(){
-        if(connection != null){
-            try{
-                connection.close();
+    @Override
+    public void delete(Entity entity) throws IllegalAccessException {
+        if(entity instanceof Product){
+            Product product = (Product) entity;
+            String deleteQuery = "DELETE FROM Products WHERE ID=?;";
+            try(Connection conn = DriverManager.getConnection(url);
+                PreparedStatement pstmt = conn.prepareStatement(deleteQuery)){
+                pstmt.setInt(1, product.GETid());
+                pstmt.executeUpdate();
             }catch (SQLException e){
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
+        }else{
+            throw new IllegalAccessException("Entity must be Product");
         }
     }
-
-    public void createtable(){
-        try(final Statement stat = connection.createStatement()){
-            stat.execute("CREATE TABLE IF NOT EXISTS products(id int, prod_name varchar(400), quantity int, price float);");
-        } catch (SQLException e) {
-            //throw new RuntimeException(e);
-            e.printStackTrace();
-        }
-    }
-
     @Override
-    public ArrayList<Product> getALL(){
-        ArrayList<Product> prods = new ArrayList<>();
-        try(PreparedStatement stat = connection.prepareStatement("SELECT * FROM products")){
-            ResultSet rs = stat.executeQuery();
-            while (rs.next()) {
-                Product p = new Product(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getFloat(4));
-                prods.add(p);
+    public void add(Entity entity) throws IllegalAccessException {
+        if (entity instanceof Product){
+            Product product = (Product) entity;
+            String insertQuery = "INSERT INTO Products (Name, Quantity, Price) VALUES (?, ?, ?);";
+            try(Connection conn = DriverManager.getConnection(url);
+                PreparedStatement pstmt = conn.prepareStatement(insertQuery)){
+                pstmt.setString(1, product.getName());
+                pstmt.setInt(2, product.getQuantity());
+                pstmt.setDouble(3, product.getPrice());
+                pstmt.executeUpdate();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }else{
+            throw new IllegalAccessException("Entity must be Product");
+        }
+    }
+    @Override
+    public List<Product> getData(){
+        List<Product> data = new ArrayList<>();
+        String selectQuery = "SELECT * FROM Products;";
+
+        try(Connection conn = DriverManager.getConnection(url);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(selectQuery)){
+            while(rs.next()){
+                int id = rs.getInt("ID");
+                String name = rs.getString("Name");
+                int quantity = rs.getInt("Quantity");
+                double price = rs.getDouble("Price");
+
+                Product product = new Product(id, name, quantity, price);
+                data.add(product);
             }
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return prods;
+        return data;
     }
-
     @Override
-    public void add(Product prod){
-        try(PreparedStatement stat = connection.prepareStatement("INSERT INTO products VALUES (?,?,?,?);")){
-            stat.setInt(1,prod.GETid());
-            stat.setString(2,prod.getName());
-            stat.setInt(3,prod.getQuantity());
-            stat.setFloat(4,prod.getPrice());
+    public Product getById(int id) {
+        String selectQuery = "SELECT * FROM Products WHERE ID=?;";
+        try(Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(selectQuery)){
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                String name = rs.getString("Name");
+                int quantity = rs.getInt("Quantity");
+                double price = rs.getDouble("Price");
+                return new Product(id, name, quantity, price);
+            }
         }catch (SQLException e){
-            // throw new RuntimeException(e);
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void delete(Product prod){
-        String sql = "DELETE FROM products WHERE id = ?";
-        try(PreparedStatement stat = connection.prepareStatement(sql)){
-            stat.setInt(1,prod.GETid());
-            stat.executeUpdate();
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
+        return null;
     }
 }

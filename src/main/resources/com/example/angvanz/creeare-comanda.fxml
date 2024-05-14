@@ -6,12 +6,6 @@
 
 <AnchorPane prefHeight="360.0" prefWidth="565.0" style="-fx-background-color: #ADD8E6;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.angvanz.HelloController">
     <children>
-        <Label layoutX="20.0" layoutY="40.0" prefHeight="21.0" prefWidth="106.0" text="ID comanda:" textFill="WHITE">
-            <font>
-                <Font name="Lucida Console" size="15.0" />
-            </font>
-        </Label>
-        <TextField fx:id="idCom" layoutX="20.0" layoutY="59.0" prefHeight="25.0" prefWidth="149.0" promptText="ID Comanda" />
         <Label layoutX="20.0" layoutY="85.0" prefHeight="21.0" prefWidth="106.0" text="Nume firma:" textFill="WHITE">
             <font>
                 <Font name="Lucida Console" size="15.0" />
@@ -50,7 +44,7 @@
                 <Font name="Lucida Console" size="12.0" />
             </font>
         </Button>
-      <TableView layoutX="193.0" layoutY="62.0" prefHeight="190.0" prefWidth="338.0">
+      <TableView layoutX="193.0" layoutY="62.0" prefHeight="190.0" prefWidth="338.0" style="-fx-background-color: transparent;">
         <columns>
           <TableColumn prefWidth="35.0" text="ID" />
           <TableColumn prefWidth="123.0" text="Nume" />

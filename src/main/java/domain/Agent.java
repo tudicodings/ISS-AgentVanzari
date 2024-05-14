@@ -33,4 +33,5 @@ public class Agent extends Entity implements Serializable {
     public String getParola() {
         return parola;
     }
+    @Override public void SETid(int id){super.SETid(id);}
 }

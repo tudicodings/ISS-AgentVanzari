@@ -5,12 +5,12 @@ import java.io.Serializable;
 public class Product extends Entity implements Serializable {
     String name;
     Integer quantity;
-    Float price;
+    double price;
     public Product(int ID){
         super(ID);
     }
 
-    public Product(int ID, String NAME, Integer QUANTITY, Float PRICE){
+    public Product(int ID, String NAME, Integer QUANTITY, double PRICE){
         super(ID);
         this.name = NAME;
         this.quantity = QUANTITY;
@@ -26,7 +26,7 @@ public class Product extends Entity implements Serializable {
     public int GETid() {
         return super.GETid();
     }
-    public Float getPrice() {
+    public double getPrice() {
         return price;
     }
     public Integer getQuantity() {
@@ -35,4 +35,9 @@ public class Product extends Entity implements Serializable {
     public String getName() {
         return name;
     }
+    @Override public void SETid(int idd){this.id = idd;}
+    public void setPrice(double price1){this.price = price1;}
+    public void setName(String name1){this.name = name1;}
+    public void setQuantity(int quantity1){this.quantity = quantity1;}
+
 }

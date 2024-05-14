@@ -11,4 +11,5 @@ public abstract class Entity implements Serializable {
     public int GETid(){
         return id;
     }
+    public void SETid(int idd){this.id = idd;}
 }

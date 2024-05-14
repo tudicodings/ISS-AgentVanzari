@@ -2,12 +2,12 @@ package repository;
 
 import domain.Entity;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.function.IntToDoubleFunction;
+import java.util.List;
 
 public interface RepoINT<T extends Entity> {
-    ArrayList<T> getALL();
+    void createTablesIfNotExists();
     void add(T entity) throws Exception;
     void delete(T entity) throws Exception;
+    List getData();
+    Entity getById(int id);
 }

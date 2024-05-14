@@ -11,26 +11,26 @@
             <Font name="Lucida Console" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="idProd" layoutX="20.0" layoutY="59.0" prefHeight="25.0" prefWidth="149.0" promptText="ID Produs" />
+      <TextField fx:id="delid" layoutX="20.0" layoutY="59.0" prefHeight="25.0" prefWidth="149.0" promptText="ID Produs" />
       <Label layoutX="20.0" layoutY="85.0" text="Denumire:" textFill="WHITE">
          <font>
             <Font name="Lucida Console" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="numeP" layoutX="20.0" layoutY="104.0" prefHeight="25.0" prefWidth="149.0" promptText="Nume Produs" />
+      <TextField fx:id="namefield" layoutX="20.0" layoutY="104.0" prefHeight="25.0" prefWidth="149.0" promptText="Nume Produs" />
       <Label layoutX="20.0" layoutY="130.0" text="Cantitate:" textFill="WHITE">
          <font>
             <Font name="Lucida Console" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="cantS" layoutX="20.0" layoutY="149.0" prefHeight="25.0" prefWidth="149.0" promptText="Cantitate"/>
+      <TextField fx:id="quantityfield" layoutX="20.0" layoutY="149.0" prefHeight="25.0" prefWidth="149.0" promptText="Cantitate" />
       <Label layoutX="20.0" layoutY="175.0" text="Pret:" textFill="WHITE">
          <font>
             <Font name="Lucida Console" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="pret" layoutX="20.0" layoutY="191.0" prefHeight="25.0" prefWidth="149.0" promptText="Pret" />
-      <Button fx:id="addS" layoutX="20.0" layoutY="230.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="82.0" style="-fx-background-color: #A9A9A9;" text="Adaugare">
+      <TextField fx:id="pricefield" layoutX="20.0" layoutY="191.0" prefHeight="25.0" prefWidth="149.0" promptText="Pret" />
+      <Button fx:id="addS" layoutX="20.0" layoutY="230.0" mnemonicParsing="false" onAction="#addProdus" prefHeight="22.0" prefWidth="82.0" style="-fx-background-color: #A9A9A9;" text="Adaugare">
          <font>
             <Font name="Lucida Console" size="12.0" />
          </font></Button>
@@ -43,7 +43,7 @@
             <Font name="Lucida Console" size="15.0" />
          </font>
       </Label>
-      <TableView layoutX="195.0" layoutY="56.0" prefHeight="190.0" prefWidth="210.0">
+      <TableView fx:id="tabelprod" layoutX="195.0" layoutY="56.0" prefHeight="190.0" prefWidth="210.0" style="-fx-background-color: transparent;">
         <columns>
           <TableColumn prefWidth="29.0" text="ID" />
           <TableColumn prefWidth="69.0" text="Nume" />
