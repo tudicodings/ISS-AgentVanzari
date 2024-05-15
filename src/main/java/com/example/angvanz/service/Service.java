@@ -1,10 +1,10 @@
-package service;
+package com.example.angvanz.service;
 
-import domain.Order;
-import domain.Product;
-import repository.RepoAgentDB;
-import repository.RepoOrderDB;
-import repository.RepoProdDB;
+import com.example.angvanz.domain.Order;
+import com.example.angvanz.domain.Product;
+import com.example.angvanz.repository.RepoAgentDB;
+import com.example.angvanz.repository.RepoOrderDB;
+import com.example.angvanz.repository.RepoProdDB;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,13 +23,13 @@ public class Service {
 
     public List<Product> getAllProducts(){
         List<Product> products = prodRepo.getData();
-        Collections.sort(products, Comparator.comparing(Product::GETid));
+        Collections.sort(products, Comparator.comparing(Product::getId));
         return products;
     }
 
     public List<Order> getAllOrders(){
         List<Order> orders = orderRepo.getData();
-        Collections.sort(orders, Comparator.comparing(Order::GETid));
+        Collections.sort(orders, Comparator.comparing(Order::getId));
         return orders;
     }
 
@@ -41,7 +41,7 @@ public class Service {
             prodRepo.add(item);
         }else{
             List<Product> sortedProducts = getAllProducts();
-            int id = sortedProducts.get(sortedProducts.size() - 1).GETid() + 1;
+            int id = sortedProducts.get(sortedProducts.size() - 1).getId() + 1;
             prodRepo.add(new Product(id, name, quantity, price));
         }
     }
@@ -61,7 +61,7 @@ public class Service {
             orderRepo.add(order);
         }else{
             List<Order> sortedOrders = getAllOrders();
-            int id = sortedOrders.get(sortedOrders.size() - 1).GETid() + 1;
+            int id = sortedOrders.get(sortedOrders.size() - 1).getId() + 1;
             orderRepo.add(new Order(id, customerName, amount, productID));
         }
     }

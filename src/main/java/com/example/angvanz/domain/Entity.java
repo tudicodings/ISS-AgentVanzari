@@ -1,4 +1,4 @@
-package domain;
+package com.example.angvanz.domain;
 
 import java.io.Serializable;
 
@@ -8,8 +8,8 @@ public abstract class Entity implements Serializable {
     public Entity(int id){
         this.id = id;
     }
-    public int GETid(){
+    public int getId(){
         return id;
     }
-    public void SETid(int idd){this.id = idd;}
+    public void setId(int idd){this.id = idd;}
 }

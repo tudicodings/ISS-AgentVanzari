@@ -1,4 +1,4 @@
-package domain;
+package com.example.angvanz.domain;
 
 import java.io.Serializable;
 
@@ -22,8 +22,8 @@ public class Agent extends Entity implements Serializable {
     }
 
     @Override
-    public int GETid() {
-        return super.GETid();
+    public int getId() {
+        return super.getId();
     }
 
     public String getNume() {
@@ -33,5 +33,5 @@ public class Agent extends Entity implements Serializable {
     public String getParola() {
         return parola;
     }
-    @Override public void SETid(int id){super.SETid(id);}
+    @Override public void setId(int id){super.setId(id);}
 }

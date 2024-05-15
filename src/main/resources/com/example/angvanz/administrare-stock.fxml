@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="360.0" prefWidth="440.0" style="-fx-background-color: #ADD8E6;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.angvanz.HelloController">
+<AnchorPane prefHeight="360.0" prefWidth="440.0" style="-fx-background-color: #ADD8E6;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.angvanz.AdministrareSController">
    <children>
       <Label layoutX="20.0" layoutY="40.0" text="ID produs:" textFill="WHITE">
          <font>
@@ -43,15 +43,15 @@
             <Font name="Lucida Console" size="15.0" />
          </font>
       </Label>
-      <TableView fx:id="tabelprod" layoutX="195.0" layoutY="56.0" prefHeight="190.0" prefWidth="210.0" style="-fx-background-color: transparent;">
+      <TableView fx:id="tabel" layoutX="195.0" layoutY="56.0" prefHeight="190.0" prefWidth="210.0" style="-fx-background-color: transparent;">
         <columns>
-          <TableColumn prefWidth="29.0" text="ID" />
-          <TableColumn prefWidth="69.0" text="Nume" />
-            <TableColumn minWidth="7.0" prefWidth="68.0" text="Cantitate" />
-            <TableColumn prefWidth="43.0" text="Pret" />
+            <TableColumn prefWidth="29.0" resizable="false" text="ID" />
+            <TableColumn prefWidth="69.0" resizable="false" text="Name" />
+            <TableColumn minWidth="7.0" prefWidth="68.0" resizable="false" text="Quantity" />
+            <TableColumn prefWidth="43.0" resizable="false" text="Price" />
         </columns>
       </TableView>
-      <Button fx:id="sterg" layoutX="110.0" layoutY="230.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="82.0" style="-fx-background-color: #A9A9A9;" text="Sterge">
+      <Button fx:id="sterg" layoutX="110.0" layoutY="230.0" mnemonicParsing="false" onAction="#deleteProdus" prefHeight="22.0" prefWidth="82.0" style="-fx-background-color: #A9A9A9;" text="Sterge">
          <font>
             <Font name="Lucida Console" size="12.0" />
          </font>

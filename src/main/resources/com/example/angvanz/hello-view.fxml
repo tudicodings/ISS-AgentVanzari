@@ -14,15 +14,20 @@
          <font>
             <Font name="Lucida Console" size="15.0" />
          </font></Label>
-      <TextField fx:id="userTF" layoutX="20.0" layoutY="106.0" prefHeight="25.0" prefWidth="237.0" promptText="username"/>
+      <TextField fx:id="userTF" layoutX="20.0" layoutY="106.0" prefHeight="25.0" prefWidth="237.0" promptText="username" />
       <Label layoutX="22.0" layoutY="131.0" prefHeight="21.0" prefWidth="82.0" text="parola:" textFill="WHITE">
          <font>
             <Font name="Inter Semi Bold" size="15.0" />
          </font></Label>
-      <PasswordField fx:id="passTF" layoutX="20.0" layoutY="148.0" prefHeight="25.0" prefWidth="237.0" promptText="parola"/>
+      <PasswordField fx:id="passTF" layoutX="20.0" layoutY="148.0" prefHeight="25.0" prefWidth="237.0" promptText="parola" />
       <Label layoutX="20.0" layoutY="33.0" style="-fx-background-color: #ADD8E6;" text="Panel logare" textFill="WHITE">
          <font>
             <Font name="JetBrains Mono SemiBold Italic" size="20.0" />
          </font></Label>
+      <Button layoutX="110.0" layoutY="295.0" mnemonicParsing="false" onAction="#inchidere" style="-fx-background-color: #A9A9A9;" text="Exit">
+         <font>
+            <Font name="Lucida Console" size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

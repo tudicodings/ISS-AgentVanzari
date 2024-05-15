@@ -1,4 +1,4 @@
-package domain;
+package com.example.angvanz.domain;
 
 import java.io.Serializable;
 
@@ -23,8 +23,8 @@ public class Product extends Entity implements Serializable {
     }
 
     @Override
-    public int GETid() {
-        return super.GETid();
+    public int getId() {
+        return super.getId();
     }
     public double getPrice() {
         return price;
@@ -35,9 +35,10 @@ public class Product extends Entity implements Serializable {
     public String getName() {
         return name;
     }
-    @Override public void SETid(int idd){this.id = idd;}
+    @Override public void setId(int idd){this.id = idd;}
     public void setPrice(double price1){this.price = price1;}
     public void setName(String name1){this.name = name1;}
     public void setQuantity(int quantity1){this.quantity = quantity1;}
 
 }
+

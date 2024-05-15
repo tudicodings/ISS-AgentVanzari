@@ -1,6 +1,6 @@
-package repository;
+package com.example.angvanz.repository;
 
-import domain.Entity;
+import com.example.angvanz.domain.Entity;
 
 import java.util.List;
 

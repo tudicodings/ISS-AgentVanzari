@@ -1,7 +1,7 @@
-package repository;
+package com.example.angvanz.repository;
 
-import domain.Entity;
-import domain.Order;
+import com.example.angvanz.domain.Entity;
+import com.example.angvanz.domain.Order;
 import org.sqlite.SQLiteDataSource;
 
 import java.sql.*;
@@ -41,7 +41,7 @@ public class RepoOrderDB implements RepoINT{
             String deleteQuery = "DELETE FROM Orders WHERE ID=?;";
             try (Connection conn = DriverManager.getConnection(url);
                  PreparedStatement pstmt = conn.prepareStatement(deleteQuery)){
-                pstmt.setInt(1, order.GETid());
+                pstmt.setInt(1, order.getId());
                 pstmt.executeUpdate();
             }catch(SQLException e) {
                 e.printStackTrace();
@@ -54,7 +54,7 @@ public class RepoOrderDB implements RepoINT{
     public void add(Entity entity) throws IllegalAccessException {
         if(entity instanceof Order){
             Order order = (Order) entity;
-            String insertQuery = "INSERT INTO Orders (CustomerName, Amount, ProductID VALUES (?, ?, ?);";
+            String insertQuery = "INSERT INTO Orders (CustomerName, Amount, ProductID) VALUES (?, ?, ?);";
             try (Connection conn = DriverManager.getConnection(url);
                 PreparedStatement pstmt = conn.prepareStatement(insertQuery)){
                 pstmt.setString(1, order.getCustomerName());

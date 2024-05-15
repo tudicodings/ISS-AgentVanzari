@@ -1,8 +1,8 @@
-package repository;
+package com.example.angvanz.repository;
 
 
-import domain.Entity;
-import domain.Product;
+import com.example.angvanz.domain.Entity;
+import com.example.angvanz.domain.Product;
 import org.sqlite.SQLiteDataSource;
 
 import java.sql.*;
@@ -40,7 +40,7 @@ public class RepoProdDB implements RepoINT{
             String deleteQuery = "DELETE FROM Products WHERE ID=?;";
             try(Connection conn = DriverManager.getConnection(url);
                 PreparedStatement pstmt = conn.prepareStatement(deleteQuery)){
-                pstmt.setInt(1, product.GETid());
+                pstmt.setInt(1, product.getId());
                 pstmt.executeUpdate();
             }catch (SQLException e){
                 e.printStackTrace();

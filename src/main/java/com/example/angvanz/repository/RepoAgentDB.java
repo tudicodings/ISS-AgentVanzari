@@ -1,7 +1,7 @@
-package repository;
+package com.example.angvanz.repository;
 
-import domain.Agent;
-import domain.Entity;
+import com.example.angvanz.domain.Agent;
+import com.example.angvanz.domain.Entity;
 import org.sqlite.SQLiteDataSource;
 
 import java.sql.*;
@@ -38,7 +38,7 @@ public class RepoAgentDB implements RepoINT{
             String deleteQuery = "DELETE FROM Agents WHERE ID=?;";
             try(Connection conn = DriverManager.getConnection(url);
                 PreparedStatement pstmt = conn.prepareStatement(deleteQuery)){
-                pstmt.setInt(1, agent.GETid());
+                pstmt.setInt(1, agent.getId());
                 pstmt.executeUpdate();
             }catch (SQLException e){
                 e.printStackTrace();

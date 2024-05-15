@@ -15,4 +15,8 @@ module com.example.angvanz {
 
     opens com.example.angvanz to javafx.fxml;
     exports com.example.angvanz;
+
+    opens com.example.angvanz.domain;
+    opens com.example.angvanz.repository;
+    opens com.example.angvanz.service;
 }
