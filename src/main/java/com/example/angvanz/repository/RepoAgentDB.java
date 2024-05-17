@@ -2,8 +2,11 @@ package com.example.angvanz.repository;
 
 import com.example.angvanz.domain.Agent;
 import com.example.angvanz.domain.Entity;
+import com.example.angvanz.domain.Product;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.sqlite.SQLiteDataSource;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +58,8 @@ public class RepoAgentDB implements RepoINT{
             try(Connection conn = DriverManager.getConnection(url);
                 PreparedStatement pstmt = conn.prepareStatement(insertQuery)){
                 pstmt.setString(1, agent.getNume());
-                pstmt.setString(2, agent.getParola());
+                String parolahashata = BCrypt.hashpw(agent.getParola(), BCrypt.gensalt());
+                pstmt.setString(2, parolahashata);
                 pstmt.executeUpdate();
             }catch (SQLException e){
                 e.printStackTrace();
@@ -86,6 +90,36 @@ public class RepoAgentDB implements RepoINT{
     }
     @Override
     public Entity getById(int id) {
+        String selectQuery = "SELECT * FROM Agents WHERE ID=?;";
+        try(Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(selectQuery)){
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                String username = rs.getString("Username");
+                String password = rs.getString("Password");
+                return new Agent(id, username, password);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Agent getByUsername(String username){
+        String selectQuery = "SELECT * FROM Agents WHERE Username=?;";
+        try(Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(selectQuery)){
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                int id = rs.getInt("ID");
+                String password = rs.getString("Password");
+                return new Agent(id, username, password);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
         return null;
     }
 }

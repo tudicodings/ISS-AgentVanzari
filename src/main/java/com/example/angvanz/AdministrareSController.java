@@ -268,7 +268,7 @@ public class AdministrareSController implements Initializable {
 
     @FXML
     private void back2() {
-        try {
+        try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("administrare.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);

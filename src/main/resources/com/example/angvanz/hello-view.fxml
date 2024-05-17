@@ -29,5 +29,10 @@
             <Font name="Lucida Console" size="15.0" />
          </font>
       </Button>
+      <Button layoutX="190.0" layoutY="295.0" mnemonicParsing="false" onAction="#adaugaAgent" style="-fx-background-color: #A9A9A9;" text="AddAgent">
+         <font>
+            <Font name="Lucida Console" size="15.0"/>
+         </font>
+      </Button>
    </children>
 </AnchorPane>

@@ -1,9 +1,15 @@
 package com.example.angvanz;
 
+import com.example.angvanz.domain.Agent;
+import com.example.angvanz.repository.RepoAgentDB;
+import com.example.angvanz.repository.RepoOrderDB;
+import com.example.angvanz.repository.RepoProdDB;
+import com.example.angvanz.service.Service;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -11,29 +17,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import java.net.URL;
 import java.sql.*;
+import java.util.ResourceBundle;
 
-public class HelloController{
-    @FXML
-    private Label welcomeText;
-
-    boolean admin = false;
-    boolean agent  = false;
+public class HelloController implements Initializable {
 
     //PENTRU LOGARE
     @FXML
     private TextField userTF;
     @FXML
     private TextField passTF;
-
-    // PENTRU CREEARE COMANDA
-    @FXML
-    private TextField numeF;
-    @FXML
-    private TextField denum;
-    @FXML
-    private TextField cant;
 
     // BUTOANE
     @FXML 
@@ -45,20 +41,67 @@ public class HelloController{
     @FXML
     Button back;
     @FXML
-    Button add;
+    Button addAgent;
 
-    public boolean login(String username, String password){
-        String query = "SELECT * FROM Agents WHERE username = ? AND password = ?";
+    private RepoProdDB productRepo;
+    private RepoOrderDB orderRepo;
+    private RepoAgentDB agentRepo;
+    private Service service;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle){
+        productRepo = new RepoProdDB();
+        orderRepo = new RepoOrderDB();
+        agentRepo = new RepoAgentDB();
+        service = new Service(productRepo, orderRepo, agentRepo);
+    }
+
+//    public boolean login(String username, String password){
+//        String query = "SELECT * FROM Agents WHERE username = ? AND password = ?";
+//        try(Connection conn = DriverManager.getConnection("jdbc:sqlite:agents.sqlite");
+//            PreparedStatement pstmt = conn.prepareStatement(query)){
+//            pstmt.setString(1, username);
+//            pstmt.setString(2, password);
+//            ResultSet rs = pstmt.executeQuery();
+//            return rs.next();
+//        }catch (SQLException e){
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
+
+    public boolean loginHash(String username, String password){
+        /*String query = "SELECT * FROM Agents WHERE username = ?";
         try(Connection conn = DriverManager.getConnection("jdbc:sqlite:agents.sqlite");
-            PreparedStatement pstmt = conn.prepareStatement(query)){
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            ResultSet rs = pstmt.executeQuery();
-            return rs.next();
+            Statement pstmt = conn.createStatement()){
+            //pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery(query);
+            while(rs.next()){
+                if(rs.getString("Username").equals(username) && BCrypt.checkpw(password, rs.getString("Password"))){
+                    return true;
+                }
+            }
         }catch (SQLException e){
             e.printStackTrace();
             return false;
         }
+        return false;*/
+        Agent agent = agentRepo.getByUsername(username);
+        if(BCrypt.checkpw(password, agent.getParola())){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @FXML
+    private void adaugaAgent() throws IllegalAccessException {
+        int id =10;
+        String username="admin.agent";
+        String password="admin";
+        Agent agent = new Agent(id, username, password);
+        agentRepo.add(agent);
     }
     @FXML
     private void openAdministrare(){
@@ -68,7 +111,7 @@ public class HelloController{
             if(userU.isEmpty() || passU.isEmpty()){
                 throw new NumberFormatException("All fields must be filled.");
             }
-            if(!userU.endsWith(".agent") || !login(userU, passU)){
+            if(!userU.endsWith(".agent") || !loginHash(userU, passU)){
                 throw  new NumberFormatException("Username-ul sau parola nu este valid!");
             }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("administrare.fxml"));

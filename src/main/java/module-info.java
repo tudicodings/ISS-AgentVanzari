@@ -12,6 +12,8 @@ module com.example.angvanz {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires org.xerial.sqlitejdbc;
+    requires spring.security.core;
+    requires java.desktop;
 
     opens com.example.angvanz to javafx.fxml;
     exports com.example.angvanz;

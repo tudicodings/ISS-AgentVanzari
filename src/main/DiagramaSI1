@@ -1,0 +1,38 @@
+    Utilizator             HelloController               TextField                    RepoAgentDB                     BCrypt                   FXMLLoader               Stage                 Alert
+       |                          |                         |                              |                            |                        |                       |                     |
+       |---> openAdministrare() --|                         |                              |                            |                        |                       |                     |
+       |                          |---> getText() --------->|                              |                            |                        |                       |                     |
+       |                          |<------------------------|                              |                            |                        |                       |                     |
+       |                          |---> getText() --------->|                              |                            |                        |                       |                     |
+       |                          |<------------------------|                              |                            |                        |                       |                     |
+       |                          |                          |                              |                            |                        |                       |                     |
+       |                          |---> loginHash() --------|----------------------------->|                            |                        |                       |                     |
+       |                          |                          |                              |---> getByUsername() ------|                        |                       |                     |
+       |                          |                          |                              |<---------------------------|                        |                       |                     |
+       |                          |                          |                              |                            |                        |                       |                     |
+       |                          |                          |                              |---> checkpw() ------------|----------------------->|                       |                     |
+       |                          |                          |                              |                            |<------------------------|                       |                     |
+       |                          |<-------------------------|-----------------------------|                            |                        |                       |                     |
+       |                          |                          |                              |                            |                        |                       |                     |
+       |                          |---> load() --------------|----------------------------------------------------------->|                       |                     |                     |
+       |                          |<-------------------------|<-----------------------------------------------------------|                       |                     |                     |
+       |                          |                          |                              |                            |                        |                       |                     |
+       |                          |---> setScene() --------->|                                                                                       |<-----------------|                     |
+       |                          |                          |                                                                                       |                      |                     |
+       |                          |---> show() --------------|                                                                                       |                      |                     |
+       |                          |                          |                                                                                       |                      |                     |
+       |                          |<-------------------------|                                                                                       |                      |                     |
+       |                          |                          |                                                                                       |                      |                     |
+       |                          |                          |                              |                            |                        |                       |                     |
+       |                          |--------------------------|------------------------------|----------------------------|------------------------|-----------------------|                     |
+Explicații:
+    -Utilizator apelează metoda openAdministrare() din HelloController.
+    -HelloController preia textul din câmpurile userTF și passTF folosind metodele getText().
+    -HelloController apelează metoda loginHash() pentru a verifica autentificarea utilizatorului.
+    -loginHash() folosește RepoAgentDB pentru a obține agentul din baza de date pe baza username.
+    -RepoAgentDB returnează agentul găsit.
+    -loginHash() utilizează BCrypt pentru a verifica parola introdusă de utilizator cu hash-ul parolei stocat în baza de date.
+    -Dacă autentificarea reușește, HelloController încarcă noul FXML folosind FXMLLoader.
+    -FXMLLoader încarcă noul FXML și returnează root-ul scenei.
+    -HelloController setează scena nouă în Stage curent și o afișează.
+    -În caz de eroare, HelloController afișează un Alert cu mesajul corespunzător.
